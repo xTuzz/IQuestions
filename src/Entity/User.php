@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -39,6 +41,22 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column]
     private ?int $Age = null;
+
+    #[ORM\OneToMany(mappedBy: 'Author', targetEntity: Quizz::class, orphanRemoval: true)]
+    private Collection $createdquizz;
+
+    #[ORM\OneToMany(mappedBy: 'player', targetEntity: Play::class, orphanRemoval: true)]
+    private Collection $playedquizz;
+
+    #[ORM\OneToMany(mappedBy: 'player', targetEntity: Answer::class, orphanRemoval: true)]
+    private Collection $answers;
+
+    public function __construct()
+    {
+        $this->createdquizz = new ArrayCollection();
+        $this->playedquizz = new ArrayCollection();
+        $this->answers = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -154,6 +172,96 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setAge(int $Age): self
     {
         $this->Age = $Age;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Quizz>
+     */
+    public function getCreatedquizz(): Collection
+    {
+        return $this->createdquizz;
+    }
+
+    public function addCreatedquizz(Quizz $createdquizz): self
+    {
+        if (!$this->createdquizz->contains($createdquizz)) {
+            $this->createdquizz->add($createdquizz);
+            $createdquizz->setAuthor($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCreatedquizz(Quizz $createdquizz): self
+    {
+        if ($this->createdquizz->removeElement($createdquizz)) {
+            // set the owning side to null (unless already changed)
+            if ($createdquizz->getAuthor() === $this) {
+                $createdquizz->setAuthor(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Play>
+     */
+    public function getPlayedquizz(): Collection
+    {
+        return $this->playedquizz;
+    }
+
+    public function addPlayedquizz(Play $playedquizz): self
+    {
+        if (!$this->playedquizz->contains($playedquizz)) {
+            $this->playedquizz->add($playedquizz);
+            $playedquizz->setPlayer($this);
+        }
+
+        return $this;
+    }
+
+    public function removePlayedquizz(Play $playedquizz): self
+    {
+        if ($this->playedquizz->removeElement($playedquizz)) {
+            // set the owning side to null (unless already changed)
+            if ($playedquizz->getPlayer() === $this) {
+                $playedquizz->setPlayer(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Answer>
+     */
+    public function getAnswers(): Collection
+    {
+        return $this->answers;
+    }
+
+    public function addAnswer(Answer $answer): self
+    {
+        if (!$this->answers->contains($answer)) {
+            $this->answers->add($answer);
+            $answer->setPlayer($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAnswer(Answer $answer): self
+    {
+        if ($this->answers->removeElement($answer)) {
+            // set the owning side to null (unless already changed)
+            if ($answer->getPlayer() === $this) {
+                $answer->setPlayer(null);
+            }
+        }
 
         return $this;
     }

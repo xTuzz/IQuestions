@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\QuestionsRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -25,6 +27,18 @@ class Questions
 
     #[ORM\Column(length: 255)]
     private ?string $CorrectAnswer = null;
+
+    #[ORM\ManyToOne(inversedBy: 'questions')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Quizz $quizz = null;
+
+    #[ORM\OneToMany(mappedBy: 'questions', targetEntity: Answer::class, orphanRemoval: true)]
+    private Collection $playeranswers;
+
+    public function __construct()
+    {
+        $this->playeranswers = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -75,6 +89,48 @@ class Questions
     public function setCorrectAnswer(string $CorrectAnswer): self
     {
         $this->CorrectAnswer = $CorrectAnswer;
+
+        return $this;
+    }
+
+    public function getQuizz(): ?Quizz
+    {
+        return $this->quizz;
+    }
+
+    public function setQuizz(?Quizz $quizz): self
+    {
+        $this->quizz = $quizz;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Answer>
+     */
+    public function getPlayeranswers(): Collection
+    {
+        return $this->playeranswers;
+    }
+
+    public function addPlayeranswer(Answer $playeranswer): self
+    {
+        if (!$this->playeranswers->contains($playeranswer)) {
+            $this->playeranswers->add($playeranswer);
+            $playeranswer->setQuestions($this);
+        }
+
+        return $this;
+    }
+
+    public function removePlayeranswer(Answer $playeranswer): self
+    {
+        if ($this->playeranswers->removeElement($playeranswer)) {
+            // set the owning side to null (unless already changed)
+            if ($playeranswer->getQuestions() === $this) {
+                $playeranswer->setQuestions(null);
+            }
+        }
 
         return $this;
     }
