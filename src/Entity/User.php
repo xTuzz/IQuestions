@@ -43,7 +43,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255)]
     private ?string $Pseudo = null;
 
-    #[Vich\UploadableField(mapping: "profilepicture_images", fileNameProperty: "ProfilePictureName")]
+    #[Vich\UploadableField(mapping: "profilepicture_image", fileNameProperty: "ProfilePictureName")]
     private ?File $ProfilePictureFile=null;
 
     #[ORM\Column(type: 'string')]
