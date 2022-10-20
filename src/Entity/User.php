@@ -3,16 +3,24 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use App\Entity\AnnotationInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\Embedded;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use Symfony\Component\HttpFoundation\File\File;
+use Vich\UploaderBundle\Entity\File as EmbeddedFile;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: '`user`')]
 #[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
+#[Vich\Uploadable]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
@@ -35,8 +43,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255)]
     private ?string $Pseudo = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $ProfilePicture = null;
+    #[Vich\UploadableField(mapping: "profilepicture_images", fileNameProperty: "ProfilePictureName")]
+    private ?File $ProfilePictureFile=null;
+
+    #[ORM\Column(type: 'string')]
+    private ?string $ProfilePictureName = null;
+
+    #[ORM\Column(type: 'datetime')]
+    private ?\DateTimeInterface $updatedAt = null;
 
     #[ORM\Column(length: 255)]
     private ?string $ThemePref = null;
@@ -141,17 +155,31 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
-
-    public function getProfilePicture(): ?string
+    /** 
+     * @param File|\Symfony\Component\HttpFoundation\File\UploadedFile|null $ProfilePictureFile
+     */
+    public function setProfilePictureFile(?File $ProfilePictureName = null): void
     {
-        return $this->ProfilePicture;
+        $this->ProfilePictureFile = $ProfilePictureName; 
+        
+        if (null !== $ProfilePictureName){
+            $this->updatedAt = new \DateTimeImmutable(); 
+        }
     }
 
-    public function setProfilePicture(string $ProfilePicture): self
+    public function getProfilePictureFile(): ?File
     {
-        $this->ProfilePicture = $ProfilePicture;
+        return $this->ProfilePictureFile; 
+    }
 
-        return $this;
+    public function setProfilePictureName(?string $ProfilePictureName): void
+    {
+        $this->ProfilePictureName = $ProfilePictureName;
+    }
+
+    public function getProfilePictureName(): ?string
+    {
+        return $this->ProfilePictureName;
     }
 
     public function getThemePref(): ?string
