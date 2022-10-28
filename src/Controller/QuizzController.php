@@ -21,7 +21,7 @@ class QuizzController extends AbstractController
         ]);
     }
 
-    #[Route('/nouveau', name: 'app_quizz_new', methods: ['GET', 'POST'])]
+    #[Route('/new', name: 'app_quizz_new', methods: ['GET', 'POST'])]
     public function new(Request $request, QuizzRepository $quizzRepository): Response
     {
         $quizz = new Quizz();
@@ -48,7 +48,7 @@ class QuizzController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}/modifier', name: 'app_quizz_edit', methods: ['GET', 'POST'])]
+    #[Route('/{id}/edit', name: 'app_quizz_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Quizz $quizz, QuizzRepository $quizzRepository): Response
     {
         $form = $this->createForm(QuizzType::class, $quizz);

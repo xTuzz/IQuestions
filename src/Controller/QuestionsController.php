@@ -21,7 +21,7 @@ class QuestionsController extends AbstractController
         ]);
     }
 
-    #[Route('/nouveau', name: 'app_questions_new', methods: ['GET', 'POST'])]
+    #[Route('/new', name: 'app_questions_new', methods: ['GET', 'POST'])]
     public function new(Request $request, QuestionsRepository $questionsRepository): Response
     {
         $question = new Questions();
@@ -48,7 +48,7 @@ class QuestionsController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}/modifier', name: 'app_questions_edit', methods: ['GET', 'POST'])]
+    #[Route('/{id}/edit', name: 'app_questions_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Questions $question, QuestionsRepository $questionsRepository): Response
     {
         $form = $this->createForm(QuestionsType::class, $question);

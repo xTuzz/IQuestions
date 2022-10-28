@@ -21,7 +21,7 @@ class AnswerController extends AbstractController
         ]);
     }
 
-    #[Route('/nouveau', name: 'app_answer_new', methods: ['GET', 'POST'])]
+    #[Route('/new', name: 'app_answer_new', methods: ['GET', 'POST'])]
     public function new(Request $request, AnswerRepository $answerRepository): Response
     {
         $answer = new Answer();
@@ -48,7 +48,7 @@ class AnswerController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}/modifier', name: 'app_answer_edit', methods: ['GET', 'POST'])]
+    #[Route('/{id}/edit', name: 'app_answer_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Answer $answer, AnswerRepository $answerRepository): Response
     {
         $form = $this->createForm(AnswerType::class, $answer);

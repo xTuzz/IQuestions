@@ -21,7 +21,7 @@ class PlayController extends AbstractController
         ]);
     }
 
-    #[Route('/nouveau', name: 'app_play_new', methods: ['GET', 'POST'])]
+    #[Route('/new', name: 'app_play_new', methods: ['GET', 'POST'])]
     public function new(Request $request, PlayRepository $playRepository): Response
     {
         $play = new Play();
@@ -48,7 +48,7 @@ class PlayController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}/modifier', name: 'app_play_edit', methods: ['GET', 'POST'])]
+    #[Route('/{id}/edit', name: 'app_play_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Play $play, PlayRepository $playRepository): Response
     {
         $form = $this->createForm(PlayType::class, $play);
