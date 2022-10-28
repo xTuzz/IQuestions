@@ -24,7 +24,6 @@ class RegistrationFormType extends AbstractType
         $builder
             ->add('email', EmailType::class)
             ->add('Pseudo', TextType::class)
-            ->add('ProfilePictureFile', VichImageType::class)
             ->add('ThemePref', TextType::class)
             ->add('Age', IntegerType::class)
             ->add('agreeTerms', CheckboxType::class, [
