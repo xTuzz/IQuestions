@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Informations {% endblock %}
+
+{% block body %}
+
+	<link href="{{ asset('assets/css/styles.css') }}" type="text/css" rel="stylesheet">
+
+  <table id ="tab_infos">
+    <thead>
+        <tr>
+            <th>À propos de nous :</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><li class="d-flex text-black mb-2"><img class="displayed" src=/images/test.png ></li>
+            Bilel Chebbi (Groupe 1B)<a href="mailto:bilel.chebbi@etu.univ-tours.fr"> &#x1F4E7;</a></td>
+        </tr>
+        <tr>
+          <td><li class="d-flex text-black mb-2"><img class="displayed" src=/images/test1.png ></li>
+          Allane Bourdon (Groupe 1B)<a href="mailto:bilel.chebbi@etu.univ-tours.fr"> &#x1F4E7;</a></td>
+        </tr>
+        <tr>
+          <td><li class="d-flex text-black mb-2"><img class="displayed" src=/images/test1.png ></li>
+          Victor Bonlieu-Fortier (Groupe 1A)<a href="mailto:bilel.chebbi@etu.univ-tours.fr"> &#x1F4E7;</a></td>
+        </tr>
+        <tr>
+          <td><li class="d-flex text-black mb-2"><img class="displayed" src=/images/test1.png ></li>
+          Henri Cossais (Groupe 1A)<a href="mailto:bilel.chebbi@etu.univ-tours.fr"> &#x1F4E7;</a></td>
+        </tr>
+    </tbody>
+  </table>
+
+{% endblock %}
