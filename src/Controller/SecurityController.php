@@ -13,9 +13,10 @@ class SecurityController extends AbstractController
     #[Route(path: '/login', name: 'app_login')]
     public function login(AuthenticationUtils $authenticationUtils): Response
     {
-        /*if ($this->getUser()) {
-             return $this->redirectToRoute('/');
-         }*/
+        if ($this->getUser()) {
+             return $this->redirectToRoute('homepage');
+         }
+
 
         // get the login error if there is one
         $error = $authenticationUtils->getLastAuthenticationError();
@@ -30,4 +31,9 @@ class SecurityController extends AbstractController
     {
         throw new \LogicException('This method can be blank - it will be intercepted by the logout key on your firewall.');
     }
+
+    #[Route(path: '', name: 'homepage')]
+    public function redirection(): void
+    { }
+    
 }
