@@ -6,6 +6,7 @@ use App\Entity\User;
 use Doctrine\DBAL\Types\SmallIntType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
@@ -24,7 +25,16 @@ class RegistrationFormType extends AbstractType
         $builder
             ->add('email', EmailType::class)
             ->add('Pseudo', TextType::class)
-            ->add('ThemePref', TextType::class)
+            ->add('ThemePref', ChoiceType::class, [
+                'choices' =>
+                [
+                    'Sport' => 'Sport',
+                    'Geographie' => 'Geographie',
+                    'Histoire' => 'Histoire',
+                    'Art' => 'Art',
+                    'Gastronomie' => 'Gastronomie'
+                ]
+            ])
             ->add('Age', IntegerType::class)
             ->add('agreeTerms', CheckboxType::class, [
                 'mapped' => false,
