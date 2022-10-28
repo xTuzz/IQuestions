@@ -1,0 +1,5 @@
+security:
+    firewalls:
+        main:
+            form_login:
+                default_target_path: /
