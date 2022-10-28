@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route('/play')]
+#[Route('/jeu')]
 class PlayController extends AbstractController
 {
     #[Route('/', name: 'app_play_index', methods: ['GET'])]
@@ -21,7 +21,7 @@ class PlayController extends AbstractController
         ]);
     }
 
-    #[Route('/new', name: 'app_play_new', methods: ['GET', 'POST'])]
+    #[Route('/nouveau', name: 'app_play_new', methods: ['GET', 'POST'])]
     public function new(Request $request, PlayRepository $playRepository): Response
     {
         $play = new Play();
@@ -48,7 +48,7 @@ class PlayController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}/edit', name: 'app_play_edit', methods: ['GET', 'POST'])]
+    #[Route('/{id}/modifier', name: 'app_play_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Play $play, PlayRepository $playRepository): Response
     {
         $form = $this->createForm(PlayType::class, $play);

@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route('/answer')]
+#[Route('/reponse')]
 class AnswerController extends AbstractController
 {
     #[Route('/', name: 'app_answer_index', methods: ['GET'])]
@@ -21,7 +21,7 @@ class AnswerController extends AbstractController
         ]);
     }
 
-    #[Route('/new', name: 'app_answer_new', methods: ['GET', 'POST'])]
+    #[Route('/nouveau', name: 'app_answer_new', methods: ['GET', 'POST'])]
     public function new(Request $request, AnswerRepository $answerRepository): Response
     {
         $answer = new Answer();
@@ -48,7 +48,7 @@ class AnswerController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}/edit', name: 'app_answer_edit', methods: ['GET', 'POST'])]
+    #[Route('/{id}/modifier', name: 'app_answer_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Answer $answer, AnswerRepository $answerRepository): Response
     {
         $form = $this->createForm(AnswerType::class, $answer);
