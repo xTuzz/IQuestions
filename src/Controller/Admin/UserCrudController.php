@@ -12,6 +12,13 @@ class UserCrudController extends AbstractCrudController
         return User::class;
     }
 
+    public function createEntity(string $entityFqcn)
+    {
+        $user = new User();
+        return $user;
+    }
+
+
     /*
     public function configureFields(string $pageName): iterable
     {

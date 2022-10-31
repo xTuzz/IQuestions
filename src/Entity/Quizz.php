@@ -32,10 +32,14 @@ class Quizz
     #[ORM\OneToMany(mappedBy: 'quizz', targetEntity: Play::class, orphanRemoval: true)]
     private Collection $played;
 
+    #[ORM\Column]
+    private ?bool $Hide = null;
+
     public function __construct()
     {
         $this->questions = new ArrayCollection();
         $this->played = new ArrayCollection();
+        $this->setHide(false);
     }
 
     public function getId(): ?int
@@ -135,6 +139,18 @@ class Quizz
                 $played->setQuizz(null);
             }
         }
+
+        return $this;
+    }
+
+    public function isHide(): ?bool
+    {
+        return $this->Hide;
+    }
+
+    public function setHide(bool $Hide): self
+    {
+        $this->Hide = $Hide;
 
         return $this;
     }
