@@ -18,6 +18,15 @@
     </head>
     <body>
         {% include 'base/nav.html.twig' %}
+
+        {% for messages in app.flashes(['success', 'warning']) %}
+
+        <div class="flash-{{ label }}">
+            {{ message }}
+        </div>
+
+        {% endfor %}
+
         {% block body %}{% endblock %}
         {% include 'base/footer.html.twig' %}
     </body>

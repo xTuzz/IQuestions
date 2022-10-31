@@ -67,9 +67,11 @@ class UserCrudController extends AbstractCrudController
 
         if (in_array("ROLE_ADMIN", $userRoles)) {
             $user->setRoles(['ROLE_MODERATOR']);
+            $this->addFlash('success', $user->getPseudo()." has been downgrade");
         }
         if (in_array("ROLE_MODERATOR", $userRoles)) {
             $user->setRoles(['ROLE_USER']);
+            $this->addFlash('success', $user->getPseudo()." has been downgrade");
         }
 
         $userRepository->save($user, true);
@@ -87,9 +89,11 @@ class UserCrudController extends AbstractCrudController
 
         if (in_array("ROLE_MODERATOR", $userRoles)) {
             $user->setRoles(['ROLE_ADMIN']);
+            $this->addFlash('success', $user->getPseudo()." has been upgrade");
         }
         if (in_array("ROLE_USER", $userRoles)) {
             $user->setRoles(['ROLE_MODERATOR']);
+            $this->addFlash('success', $user->getPseudo()." has been upgrade");
         }
 
         $userRepository->save($user, true);
