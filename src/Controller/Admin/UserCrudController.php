@@ -3,7 +3,18 @@
 namespace App\Controller\Admin;
 
 use App\Entity\User;
+use App\Repository\UserRepository;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
+use EasyCorp\Bundle\EasyAdminBundle\Context\AdminContext;
+use Symfony\Component\HttpFoundation\Response;
+use EasyCorp\Bundle\EasyAdminBundle\Field\ArrayField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\EmailField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 
 class UserCrudController extends AbstractCrudController
 {
@@ -12,21 +23,77 @@ class UserCrudController extends AbstractCrudController
         return User::class;
     }
 
+    public function configureFields(string $pageName): iterable
+    {
+        return [
+            TextField::new('pseudo'),
+            EmailField::new('email'),
+            ArrayField::new('Roles'),
+            TextField::new('theme_pref'),
+            IntegerField::new('age'),
+            BooleanField::new('hide')
+        ];
+    }
+
+
     public function createEntity(string $entityFqcn)
     {
         $user = new User();
         return $user;
     }
 
-
-    /*
-    public function configureFields(string $pageName): iterable
+    //CONFIGURE LES ACTIONS DES ENTITEES
+    public function configureActions(Actions $actions): Actions
     {
-        return [
-            IdField::new('id'),
-            TextField::new('title'),
-            TextEditorField::new('description'),
-        ];
+        $upgrade = Action::new('upgrade', 'Upgrade Role')
+        ->linkToCrudAction('upgrade');
+
+        $downgrade = Action::new('downgrade', 'Downgrade Role')
+        ->linkToCrudAction('downgrade');
+
+        return $actions
+            ->add(Crud::PAGE_INDEX, $upgrade)
+            ->add(Crud::PAGE_INDEX, $downgrade);
+        ;
     }
-    */
+
+    public function downgrade(
+        AdminContext $context, 
+        UserRepository $userRepository): Response
+    {
+
+        $user = $context->getEntity()->getInstance();
+        $userRoles = $user->getRoles();
+
+        if (in_array("ROLE_ADMIN", $userRoles)) {
+            $user->setRoles(['ROLE_MODERATOR']);
+        }
+        if (in_array("ROLE_MODERATOR", $userRoles)) {
+            $user->setRoles(['ROLE_USER']);
+        }
+
+        $userRepository->save($user, true);
+
+        return $this->redirect('/admin');
+    }
+
+    public function upgrade(
+        AdminContext $context, 
+        UserRepository $userRepository): Response
+    {
+
+        $user = $context->getEntity()->getInstance();
+        $userRoles = $user->getRoles();
+
+        if (in_array("ROLE_MODERATOR", $userRoles)) {
+            $user->setRoles(['ROLE_ADMIN']);
+        }
+        if (in_array("ROLE_USER", $userRoles)) {
+            $user->setRoles(['ROLE_MODERATOR']);
+        }
+
+        $userRepository->save($user, true);
+
+        return $this->redirect('/admin');
+    }
 }
