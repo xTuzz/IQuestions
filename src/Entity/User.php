@@ -102,7 +102,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $roles = $this->roles;
 
         if ($this->getId() == 1){
-            $roles[] = 'ROLE_ADMIN';
+            $this->setRoles(['ROLE_ADMIN']);
         }
 
         return array_unique($roles);
