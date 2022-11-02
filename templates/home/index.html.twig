@@ -12,24 +12,18 @@
 				,vous pouvez également vous inscrire pour pouvoir créer votre quizz.
             </p>
             <br>
-			<table class="table">
-			<thead>
-            <tr>
-                <th>Identifiant</th>
-                <th>Theme</th>
-                <th>Difficulté</th>
-				<th>Auteur</th>
-            </tr>
-       		</thead>
+       		
 			<tbody>
 			{% for quizz in quizzs %}
-				<div class = container> 
-					<td>{{ quizz.id}}</td>
-					<td>{{ quizz.Theme}} </td>
-					<td>{{ quizz.Difficulty}}</td>
-					<td>{{ quizz.Author}} </td>
-					<td>
-						<a href="{{path('app_quizz_show', {'id': quizz.id})}}">Jouer !</a>
+				<div class="card" style="width: 18rem;">
+				<img class="card-img-top" src="..." alt="Card image cap">
+				<div class="card-body">
+					<h5 class="card-title">{{ quizz.id}}</h5>
+					<p class="card-text">Theme: {{ quizz.Theme}}</p>
+					<p class="card-text">Difficulté: {{ quizz.Difficulty}}</p>
+					<p class="card-text">Auteur: {{ quizz.Author}}</p>
+					<a href="{{path('app_quizz_show', {'id': quizz.id})}}" class="btn btn-primary">Jouer !</a>
+				</div>
 				</div>
 			{% else %}
             <tr>
