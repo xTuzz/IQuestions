@@ -46,14 +46,36 @@ class UserCrudController extends AbstractCrudController
     public function configureActions(Actions $actions): Actions
     {
         $upgrade = Action::new('upgrade', 'Upgrade Role')
-        ->linkToCrudAction('upgrade');
+        ->linkToCrudAction('upgrade')
+        ->setCssClass('btn btn-dark')
+        ->displayIf(static function ($user){
+            if(in_array('ROLE_ADMIN', $user->getRoles())) return false;
+            else return true;
+        });
 
         $downgrade = Action::new('downgrade', 'Downgrade Role')
-        ->linkToCrudAction('downgrade');
+        ->linkToCrudAction('downgrade')->setCssClass('btn btn-dark')
+        ->displayIf(static function ($user){
+            if(in_array('ROLE_USER', $user->getRoles())) return false;
+            else return true;
+        });
 
         return $actions
+            ->update(Crud::PAGE_INDEX, Action::EDIT, function (Action $action) {
+                return $action->setIcon('fas fa-pencil')->setLabel(false)->setCssClass('btn btn-primary');
+            })
+            ->update(Crud::PAGE_INDEX, Action::DELETE, function (Action $action) {
+                return $action->setIcon('fas fa-trash')->setLabel(false)->setCssClass('btn btn-danger');
+            })
             ->add(Crud::PAGE_INDEX, $upgrade)
             ->add(Crud::PAGE_INDEX, $downgrade);
+        ;
+    }
+
+    public function configureCrud(Crud $crud): Crud
+    {
+        return $crud
+            ->showEntityActionsInlined()
         ;
     }
 
