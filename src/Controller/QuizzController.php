@@ -25,13 +25,15 @@ class QuizzController extends AbstractController
     public function new(Request $request, QuizzRepository $quizzRepository): Response
     {
         $quizz = new Quizz();
+        $quizz->setAuthor($this->getUser());
+
         $form = $this->createForm(QuizzType::class, $quizz);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $quizzRepository->save($quizz, true);
 
-            return $this->redirectToRoute('app_quizz_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_quizz_show', ['id' => $quizz->getId()], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('quizz/new.html.twig', [
@@ -45,6 +47,7 @@ class QuizzController extends AbstractController
     {
         return $this->render('quizz/show.html.twig', [
             'quizz' => $quizz,
+            'questions' => $quizz->getQuestions()
         ]);
     }
 

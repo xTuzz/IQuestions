@@ -35,6 +35,12 @@ class Quizz
     #[ORM\Column]
     private ?bool $Hide = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $Title = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $Description = null;
+
     public function __construct()
     {
         $this->questions = new ArrayCollection();
@@ -153,5 +159,34 @@ class Quizz
         $this->Hide = $Hide;
 
         return $this;
+    }
+
+    public function getTitle(): ?string
+    {
+        return $this->Title;
+    }
+
+    public function setTitle(string $Title): self
+    {
+        $this->Title = $Title;
+
+        return $this;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->Description;
+    }
+
+    public function setDescription(string $Description): self
+    {
+        $this->Description = $Description;
+
+        return $this;
+    }
+
+    public function __toString()
+    {
+        return $this->getTitle();
     }
 }

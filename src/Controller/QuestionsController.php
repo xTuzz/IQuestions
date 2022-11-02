@@ -8,6 +8,7 @@ use App\Repository\QuestionsRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
 #[Route('/questions')]
@@ -25,6 +26,8 @@ class QuestionsController extends AbstractController
     public function new(Request $request, QuestionsRepository $questionsRepository): Response
     {
         $question = new Questions();
+        $question->setQuizz($request->query->get('quizz'));
+
         $form = $this->createForm(QuestionsType::class, $question);
         $form->handleRequest($request);
 

@@ -39,20 +39,19 @@ class QuizzRepository extends ServiceEntityRepository
         }
     }
 
-//    /**
-//     * @return Quizz[] Returns an array of Quizz objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('q')
-//            ->andWhere('q.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('q.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+   /**
+    * @return Quizz[] Returns an array of Quizz objects
+    */
+   public function findAllByUserId($value): array
+   {
+       return $this->createQueryBuilder('q')
+           ->andWhere('q.Author = :val')
+           ->setParameter('val', $value)
+           ->orderBy('q.Title', 'ASC')
+           ->getQuery()
+           ->getResult()
+       ;
+   }
 
 //    public function findOneBySomeField($value): ?Quizz
 //    {
