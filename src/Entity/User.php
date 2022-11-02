@@ -9,8 +9,6 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
-use Vich\UploaderBundle\Mapping\Annotation as Vich;
-use Symfony\Component\HttpFoundation\File\File;
 
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
@@ -102,7 +100,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $roles = $this->roles;
 
         if ($this->getId() == 1){
-            $roles[] = 'ROLE_ADMIN';
+            $this->setRoles(['ROLE_ADMIN']);
         }
 
         return array_unique($roles);

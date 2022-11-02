@@ -19,12 +19,11 @@
     <body>
         {% include 'base/nav.html.twig' %}
 
-        {#{% for messages in app.flashes(['success', 'warning']) %}
 
-        <div class="flash-{{ label }}">
+        {# {% for messages in app.flashes(['success', 'warning']) %}
+        <div class="flash-success">
             {{ message }}
         </div>
-
         {% endfor %}#}
 
         {% block body %}{% endblock %}

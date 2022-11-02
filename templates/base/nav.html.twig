@@ -26,12 +26,17 @@
 
         </ul>
         <form class="form-inline mt-2 mt-md-0">
-            {% if app.user %} 
+            {% if app.user %}
+                {% if is_granted('ROLE_ADMIN') %} 
+                <button class="btn btn-dark" type="button" onclick=window.location.href='admin' value="admin">Admin</button>
+                {% endif %}
+            <button class="btn btn-dark" type="button" onclick=window.location.href='user' value="user">Profil</button>
             <button class="btn btn-dark" type="button" onclick=window.location.href='logout' value="logout">Se déconnecter</button>
             {% else %}
             <button class="btn btn-dark" type="button" onclick=window.location.href='register' value="register">S'inscrire</button>
             <button class="btn btn-dark" type="button" onclick=window.location.href='login' value="login">Se connecter</button>
             {% endif %}
+            
         </form>
     </div>
 </div>

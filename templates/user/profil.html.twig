@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	{{ app.user.pseudo }}
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+	<h3>{{app.user.pseudo}}</h3>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Email</th>
+                <td>{{ app.user.email }}</td>
+            </tr>
+            <tr>
+                <th>ThemePref</th>
+                <td>{{ app.user.ThemePref }}</td>
+            </tr>
+            <tr>
+                <th>Age</th>
+                <td>{{ app.user.Age }}</td>
+            </tr>
+        </tbody>
+    </table>
+    <a href="{{ path('app_user_edit', {'id': app.user.id}) }}">modifier</a>
+    </div>
+{% endblock %}
