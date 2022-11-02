@@ -7,16 +7,44 @@
 
 	<main role="main" class="container">
 		<div class="jumbotron text-center">
-			<h1>Bienvenue sur IQuestions !</h1>
-			<p class="lead text-info">Vous pouvez voir les quizz dans le
-				<a href="/quizz">Liste des Quizz</a>
-				, vous pouvez également vous inscrire pour pouvoir créer votre quizz.
+			<h1>Les Quizs de IQuestions !</h1>
+			<p class="lead text-info">Vous pouvez voir ici les quizz
+				,vous pouvez également vous inscrire pour pouvoir créer votre quizz.
             </p>
             <br>
+			<table class="table">
+			<thead>
+            <tr>
+                <th>Identifiant</th>
+                <th>Theme</th>
+                <th>Difficulté</th>
+				<th>Auteur</th>
+            </tr>
+       		</thead>
+			<tbody>
+			{% for quizz in quizzs %}
+				<div class = container> 
+					<td>{{ quizz.id}}</td>
+					<td>{{ quizz.Theme}} </td>
+					<td>{{ quizz.Difficulty}}</td>
+					<td>{{ quizz.Author}} </td>
+					<td>
+						<a href="{{path('app_quizz_show', {'id': quizz.id})}}">Jouer !</a>
+				</div>
+			{% else %}
+            <tr>
+                <td colspan="4">aucun enregistrement</td>
+            </tr>
+			{% endfor %}
+			<br>
+			<a href="{{ path('app_quizz_new') }}">Créer un nouveau Quizz</a>
+
             <br>
             <br>
             <p> Une idée ? contacter nous par mail ! </p>
 
 		</div>
+		</tbody>
+		</table>
 	</main>
 {% endblock %}
