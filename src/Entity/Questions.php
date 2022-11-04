@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use phpDocumentor\Reflection\Types\This;
 
 #[ORM\Entity(repositoryClass: QuestionsRepository::class)]
 class Questions
@@ -39,7 +40,14 @@ class Questions
     {
         $this->playeranswers = new ArrayCollection();
     }
-
+    private $questions;
+    
+    public function getquestions(){
+        return $this->questions;
+    }
+    public function setQuestions($questions){
+        $this->questions=$questions;
+    }
     public function getId(): ?int
     {
         return $this->id;

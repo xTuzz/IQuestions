@@ -3,11 +3,13 @@
 namespace App\Form;
 
 use App\Entity\Quizz;
+use App\Entity\Questions;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 
 class QuizzType extends AbstractType
@@ -41,14 +43,18 @@ class QuizzType extends AbstractType
                     '5' => 5
                 ]
             ])
-        ;
 
-        $builder->add('questions', CollectionType::class, [
+            ->add('valider', SubmitType::class)
+        ;
+        $builder->add('Questions', CollectionType::class,[
             'entry_type' => QuestionsType::class,
+            'label' => 'Questions',
             'entry_options' => ['label' => false],
             'allow_add' => true,
+            'allow_delete' => true,
+            'by_reference' => false,
+            'mapped' => false
         ]);
-
     }
 
     public function configureOptions(OptionsResolver $resolver): void

@@ -1,25 +1,12 @@
-{# {% extends 'base.html.twig' %}
-
-{% block title %}Nouveau Quizz{% endblock %}
-
-{% block body %}
-<div class="container">
-    <h1>Quizz : {{  }}</h1>
-
-    {{ include('quizz/_form.html.twig') }}
-
-</div>
-{% endblock %} #}
-
-
 {% block body %}
     <h1>Ajouter un Quizz</h1>
     {{ form_start(form) }}
-        {{ form_row(form.Title) }}
+    {{form_row(form.questions)}}
+        {# {{ form_row(form.Title) }}
         <div id="questions" data-prototype="{{ form_row(form.questions.vars.prototype)|e('html_attr') }}">
             {{ form_row(form.questions) }}
             <span></span>
-        </div>
+        </div> #}
     {{ form_end(form) }}
 {% endblock %}
 
