@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello JouerController!{% endblock %}
+
+{% block body %}
+
+<div class="container">
+    <h1>Vous jouez le quizz : {{ quizz }} !</h1>
+
+    {% for question in questions %}
+
+        <p> {{ question.wording }} </p>
+        
+    {% endfor %}
+
+</div>
+{% endblock %}

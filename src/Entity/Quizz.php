@@ -2,11 +2,13 @@
 
 namespace App\Entity;
 
+use App\Repository\QuestionsRepository;
 use App\Repository\QuizzRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Console\Question\Question;
 
 #[ORM\Entity(repositoryClass: QuizzRepository::class)]
 class Quizz
