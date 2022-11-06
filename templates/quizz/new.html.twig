@@ -1,12 +1,11 @@
 {% block body %}
     <h1>Ajouter un Quizz</h1>
     {{ form_start(form) }}
-    {{form_row(form.questions)}}
-        {# {{ form_row(form.Title) }}
-        <div id="questions" data-prototype="{{ form_row(form.questions.vars.prototype)|e('html_attr') }}">
-            {{ form_row(form.questions) }}
+        {{ form_row(form.Title) }}
+        <div id="questions" data-prototype="{{ form_row(form.Questions.vars.prototype)|e('html_attr') }}">
+            {{ form_row(form.Questions) }}
             <span></span>
-        </div> #}
+        </div>
     {{ form_end(form) }}
 {% endblock %}
 
@@ -14,11 +13,11 @@
     <script>
         let collection, boutonAjout, span;
         window.onload = () => {
-            collection = document.querySelector("#departements");
+            collection = document.querySelector("#questions");
             span = collection.querySelector("span");
             boutonAjout = document.createElement("button");
-            boutonAjout.className = "ajout-departement btn secondary";
-            boutonAjout.innerText = "Ajouter un département";
+            boutonAjout.className = "ajout-questions btn secondary";
+            boutonAjout.innerText = "Ajouter une questions";
             let nouveauBouton = span.append(boutonAjout);
             collection.dataset.index = collection.querySelectorAll("input").length;
             boutonAjout.addEventListener("click", function(){
@@ -36,10 +35,10 @@
             boutonSuppr.type = "button";
             boutonSuppr.className = "btn red";
             boutonSuppr.id = "delete-departement-" + index;
-            boutonSuppr.innerText = "Supprimer ce département";
+            boutonSuppr.innerText = "Supprimer cette questions";
             newForm.append(boutonSuppr);
             collection.dataset.index++;
-            let boutonAjout = collection.querySelector(".ajout-departement");
+            let boutonAjout = collection.querySelector(".ajout-questions");
             span.insertBefore(newForm, boutonAjout);
             boutonSuppr.addEventListener("click", function(){
                 this.previousElementSibling.parentElement.remove();

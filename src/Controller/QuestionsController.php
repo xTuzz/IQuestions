@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Questions;
 use App\Form\QuestionsType;
 use App\Repository\QuestionsRepository;
+use App\Repository\QuizzRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -23,10 +24,10 @@ class QuestionsController extends AbstractController
     }
 
     #[Route('/new', name: 'app_questions_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, QuestionsRepository $questionsRepository): Response
+    public function new(Request $request, QuestionsRepository $questionsRepository, QuizzRepository $quizzRepository): Response
     {
         $question = new Questions();
-        $question->setQuizz($request->query->get('quizz'));
+        $question->setQuizz($quizzRepository->findOneByTitle($request->query->get('quizz')));
 
         $form = $this->createForm(QuestionsType::class, $question);
         $form->handleRequest($request);

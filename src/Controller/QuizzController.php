@@ -6,7 +6,7 @@ use App\Entity\Quizz;
 use App\Form\QuizzType;
 use App\Repository\QuizzRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Console\Question\Question;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -23,16 +23,17 @@ class QuizzController extends AbstractController
     }
 
     #[Route('/new', name: 'app_quizz_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, QuizzRepository $quizzRepository): Response
+    public function new(Request $request, QuizzRepository $quizzRepository, EntityManagerInterface $entityManager): Response
     {
         $quizz = new Quizz();
         $quizz->setAuthor($this->getUser());
-        $form = $this->createForm(QuizzType::class, $quizz);
+        $form = $this->createForm(QuizzType::class, $quizz);    
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->persist($quizz);
+            $entityManager->flush();
             $quizzRepository->save($quizz, true);
-
             return $this->redirectToRoute('app_quizz_show', ['id' => $quizz->getId()], Response::HTTP_SEE_OTHER);
         }
 

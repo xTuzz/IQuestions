@@ -43,18 +43,18 @@ class QuizzType extends AbstractType
                     '5' => 5
                 ]
             ])
-
+            ->add('Questions', CollectionType::class,[
+                'entry_type' => QuestionsType::class,
+                'label' => 'Questions',
+                'entry_options' => ['label' => false],
+                'allow_add' => true,
+                'allow_delete' => true,
+                'by_reference' => false
+            ])
             ->add('valider', SubmitType::class)
-        ;
-        $builder->add('Questions', CollectionType::class,[
-            'entry_type' => QuestionsType::class,
-            'label' => 'Questions',
-            'entry_options' => ['label' => false],
-            'allow_add' => true,
-            'allow_delete' => true,
-            'by_reference' => false,
-            'mapped' => false
-        ]);
+    ;
+        
+ 
     }
 
     public function configureOptions(OptionsResolver $resolver): void

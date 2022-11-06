@@ -53,13 +53,13 @@ class QuizzRepository extends ServiceEntityRepository
        ;
    }
 
-//    public function findOneBySomeField($value): ?Quizz
-//    {
-//        return $this->createQueryBuilder('q')
-//            ->andWhere('q.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+   public function findOneByTitle($value): ?Quizz
+   {
+       return $this->createQueryBuilder('q')
+           ->andWhere('q.Title = :val')
+           ->setParameter('val', $value)
+           ->getQuery()
+           ->getOneOrNullResult()
+       ;
+   }
 }

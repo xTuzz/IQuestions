@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\Entity;
+use PhpParser\Node\Expr\Cast\Array_;
 use Symfony\Component\Console\Question\Question;
 
 #[ORM\Entity(repositoryClass: QuizzRepository::class)]
@@ -27,8 +28,8 @@ class Quizz
     #[ORM\ManyToOne(inversedBy: 'createdquizz')]
     #[ORM\JoinColumn(nullable: false)]
     private ?User $Author = null;
-
-    #[ORM\OneToMany(mappedBy: 'quizz', targetEntity: Questions::class, orphanRemoval: true)]
+    
+    #[ORM\OneToMany(mappedBy: 'quizz',cascade : ["persist", "remove"], targetEntity: Questions::class, orphanRemoval: true)]
     private Collection $questions;
 
     #[ORM\OneToMany(mappedBy: 'quizz', targetEntity: Play::class, orphanRemoval: true)]

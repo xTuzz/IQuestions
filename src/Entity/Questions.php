@@ -29,7 +29,7 @@ class Questions
     #[ORM\Column(length: 255)]
     private ?string $CorrectAnswer = null;
 
-    #[ORM\ManyToOne(inversedBy: 'questions')]
+    #[ORM\ManyToOne(targetEntity: Quizz::class,cascade : ["persist", "remove"], inversedBy: 'questions')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Quizz $quizz = null;
 
@@ -130,7 +130,10 @@ class Questions
 
         return $this;
     }
-
+    public function __toString()
+    {
+        return $this->getWording();
+    }
     public function removePlayeranswer(Answer $playeranswer): self
     {
         if ($this->playeranswers->removeElement($playeranswer)) {
