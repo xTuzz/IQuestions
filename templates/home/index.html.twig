@@ -13,9 +13,18 @@
             </p>
 			<a href="{{ path('app_quizz_new') }}">Créer un nouveau Quizz</a>
             <br>
-       		
 			<tbody>
+			<style>
+			.card{
+				margin-top: 10px;
+				margin-bottom: 10px;
+				margin-left: 23px;
+			}
+			</style>
+			<div class="container">
+			<div class="row d-flex justify-content-space-around">
 			{% for quizz in quizzs %}
+			<div class="col-auto">
 				<div class="card" style="width: 18rem;">
 				<img class="card-img-top" src="..." alt="Card image cap">
 				<div class="card-body">
@@ -26,11 +35,14 @@
 					<a href="{{path('app_quizz_show', {'id': quizz.id})}}" class="btn btn-primary">Jouer !</a>
 				</div>
 				</div>
+				</div>
 			{% else %}
             <tr>
                 <td colspan="4">aucun enregistrement</td>
             </tr>
 			{% endfor %}
+			</div>
+			</div>
 			<br>
 			
 
