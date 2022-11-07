@@ -4,8 +4,10 @@ namespace App\Form;
 
 use App\Entity\Quizz;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Vich\UploaderBundle\Form\Type\VichImageType;
 
 class QuizzType extends AbstractType
 {
@@ -15,7 +17,8 @@ class QuizzType extends AbstractType
             ->add('Theme')
             ->add('Difficulty')
             ->add('Author')
-        ;
+            ->add('imageFile', VichImageType::class)
+            ->add('imageName', HiddenType::class);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

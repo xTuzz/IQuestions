@@ -16,12 +16,12 @@
 			<tbody>
 			{% for quizz in quizzs %}
 				<div class="card" style="width: 18rem;">
-				<img class="card-img-top" src="..." alt="Card image cap">
+				<img class="card-img-top" src={{ vich_uploader_asset('imageFile') }} alt="card image">
 				<div class="card-body">
-					<h5 class="card-title">{{ quizz.id}}</h5>
-					<p class="card-text">Theme: {{ quizz.Theme}}</p>
-					<p class="card-text">Difficulté: {{ quizz.Difficulty}}</p>
-					<p class="card-text">Auteur: {{ quizz.Author}}</p>
+					<h5 class="card-title">{{ quizz.id }}</h5>
+					<p class="card-text">Theme: {{ quizz.Theme }}</p>
+					<p class="card-text">Difficulté: {{ quizz.Difficulty }}</p>
+					<p class="card-text">Auteur: {{ quizz.Author }}</p>
 					<a href="{{path('app_quizz_show', {'id': quizz.id})}}" class="btn btn-primary">Jouer !</a>
 				</div>
 				</div>
